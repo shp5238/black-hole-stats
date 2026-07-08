@@ -46,9 +46,9 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](walkthrough.gif)
+![https://www.loom.com/share/f246d7f300694d849175d1331745b447](walkthrough video)
 
-GIF created with Kap for macOS.
+GIF created with Loom.
 
 ## API
 

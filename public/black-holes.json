@@ -1,0 +1,98 @@
+[
+  {
+    "id": "sgr-a-star",
+    "name": "Sagittarius A*",
+    "type": "Supermassive",
+    "mass": 4300000,
+    "distance": 26673,
+    "constellation": "Sagittarius"
+  },
+  {
+    "id": "m87-star",
+    "name": "M87*",
+    "type": "Supermassive",
+    "mass": 6500000000,
+    "distance": 53500000,
+    "constellation": "Virgo"
+  },
+  {
+    "id": "cygnus-x-1",
+    "name": "Cygnus X-1",
+    "type": "Stellar",
+    "mass": 21,
+    "distance": 7240,
+    "constellation": "Cygnus"
+  },
+  {
+    "id": "v404-cygni",
+    "name": "V404 Cygni",
+    "type": "Stellar",
+    "mass": 9,
+    "distance": 7800,
+    "constellation": "Cygnus"
+  },
+  {
+    "id": "gro-j1655-40",
+    "name": "GRO J1655-40",
+    "type": "Stellar",
+    "mass": 6.3,
+    "distance": 11000,
+    "constellation": "Scorpius"
+  },
+  {
+    "id": "a0620-00",
+    "name": "A0620-00",
+    "type": "Stellar",
+    "mass": 6.6,
+    "distance": 3300,
+    "constellation": "Monoceros"
+  },
+  {
+    "id": "ngc-1277",
+    "name": "NGC 1277",
+    "type": "Supermassive",
+    "mass": 17000000000,
+    "distance": 220000000,
+    "constellation": "Perseus"
+  },
+  {
+    "id": "ton-618",
+    "name": "TON 618",
+    "type": "Supermassive",
+    "mass": 66000000000,
+    "distance": 10400000000,
+    "constellation": "Canes Venatici"
+  },
+  {
+    "id": "hlx-1",
+    "name": "HLX-1",
+    "type": "Intermediate",
+    "mass": 20000,
+    "distance": 290000000,
+    "constellation": "Phoenix"
+  },
+  {
+    "id": "eso-243-49",
+    "name": "ESO 243-49 HLX-1",
+    "type": "Intermediate",
+    "mass": 50000,
+    "distance": 290000000,
+    "constellation": "Phoenix"
+  },
+  {
+    "id": "ic-10-x-1",
+    "name": "IC 10 X-1",
+    "type": "Stellar",
+    "mass": 24,
+    "distance": 2200000,
+    "constellation": "Cassiopeia"
+  },
+  {
+    "id": "lmc-x-1",
+    "name": "LMC X-1",
+    "type": "Stellar",
+    "mass": 10.9,
+    "distance": 163000,
+    "constellation": "Dorado"
+  }
+]

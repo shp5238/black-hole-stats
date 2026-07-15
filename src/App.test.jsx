@@ -177,9 +177,28 @@ describe('dashboard filtering', () => {
       target: { value: '4' },
     });
 
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('10.9 M☉');
+    expect(screen.getByLabelText('Current minimum mass')).toHaveTextContent('10.9 M☉');
     expect(screen.getByText('Cygnus X-1')).toBeInTheDocument();
     expect(screen.queryByText('V404 Cygni')).not.toBeInTheDocument();
+  });
+
+  it('supports precise minimum-mass changes with step buttons', async () => {
+    await renderDashboard();
+
+    const decreaseButton = screen.getByRole('button', {
+      name: 'Decrease minimum mass',
+    });
+    const increaseButton = screen.getByRole('button', {
+      name: 'Increase minimum mass',
+    });
+
+    expect(decreaseButton).toBeDisabled();
+    fireEvent.click(increaseButton);
+    expect(screen.getByLabelText('Current minimum mass')).toHaveTextContent('6.3 M☉');
+    expect(decreaseButton).toBeEnabled();
+
+    fireEvent.click(decreaseButton);
+    expect(screen.getByLabelText('Current minimum mass')).toHaveTextContent('0 M☉');
   });
 
   it('applies search, classification, and mass filters at the same time', async () => {
@@ -375,10 +394,14 @@ describe('routing, resilience, and accessibility', () => {
       target: { value: 'definitely-not-a-black-hole' },
     });
 
-    expect(screen.getByRole('status')).toHaveTextContent(/No black holes match/i);
+    expect(
+      screen.getByRole('status', { name: 'No matching black holes' }),
+    ).toHaveTextContent(/No black holes match/i);
     fireEvent.click(screen.getByRole('button', { name: 'Reset filters' }));
     expect(visibleBodyRows()).toHaveLength(12);
-    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('status', { name: 'No matching black holes' }),
+    ).not.toBeInTheDocument();
   });
 
   it('provides chart summaries and updates the scatter scale description', async () => {
@@ -389,6 +412,41 @@ describe('routing, resilience, and accessibility', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Linear' }));
     expect(screen.getByRole('img', { name: /shown on a linear scale/i })).toBeInTheDocument();
+  });
+
+  it('groups fixed catalog charts separately from mass-filtered results', async () => {
+    await renderDashboard();
+
+    const overview = screen.getByRole('region', { name: 'What stands out' });
+    const filteredCatalog = screen.getByRole('region', { name: 'Filtered catalog' });
+
+    expect(within(overview).getByRole('img', { name: /Catalog mix:/i }))
+      .toBeInTheDocument();
+    expect(within(overview).getByRole('img', { name: /12 black holes/i }))
+      .toBeInTheDocument();
+    expect(within(overview).queryByRole('slider')).not.toBeInTheDocument();
+
+    expect(within(filteredCatalog).getByRole('slider')).toBeInTheDocument();
+    expect(within(filteredCatalog).getByRole('table')).toBeInTheDocument();
+    expect(within(filteredCatalog).getByText('Matching Objects'))
+      .toBeInTheDocument();
+  });
+
+  it('provides keyboard and screen-reader context for the results table', async () => {
+    await renderDashboard();
+
+    expect(document.querySelector('main')).toHaveAttribute('tabindex', '-1');
+
+    const tableRegion = screen.getByRole('region', {
+      name: 'Black hole results table',
+    });
+    expect(tableRegion).toHaveAttribute('tabindex', '0');
+    expect(within(tableRegion).getByText('Black holes matching the current filters'))
+      .toBeInTheDocument();
+
+    within(tableRegion).getAllByRole('columnheader').forEach((header) => {
+      expect(header).toHaveAttribute('scope', 'col');
+    });
   });
 
   it('paginates catalogs larger than one page without losing rows', async () => {
@@ -408,6 +466,7 @@ describe('routing, resilience, and accessibility', () => {
     await screen.findByText('Catalog Object 01');
     expect(visibleBodyRows()).toHaveLength(20);
     expect(screen.getByText('Page 1 of 2')).toBeInTheDocument();
+    expect(screen.getByText('Page 1 of 2')).toHaveAttribute('aria-live', 'polite');
 
     fireEvent.click(screen.getByRole('button', { name: 'Next' }));
     expect(visibleBodyRows()).toHaveLength(5);

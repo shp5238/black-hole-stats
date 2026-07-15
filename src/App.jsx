@@ -10,7 +10,7 @@ export function App() {
   const [filters, dispatch] = useReducer(filterReducer, initialFilterState);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>

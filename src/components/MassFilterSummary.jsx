@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Minus, Plus } from 'lucide-react';
 import { FILTER_ACTIONS } from '../state/filterReducer.js';
 import {
   formatMass,
@@ -105,47 +104,32 @@ export function MassFilterSummary({
         <label htmlFor="black-hole-slider">
           Minimum mass in solar masses (M☉)
         </label>
-        <div className="slider-control-row">
-          <button
-            className="slider-step-button"
-            type="button"
-            aria-label="Decrease minimum mass"
-            disabled={massStep === 0}
-            onClick={() => setMassStop(massStep - 1)}
-          >
-            <Minus size={20} aria-hidden="true" />
-          </button>
+        <div className="slider-track">
+          <input
+            type="range"
+            min="0"
+            max={Math.max(massStops.length - 1, 0)}
+            step="1"
+            value={massStep}
+            id="black-hole-slider"
+            style={{
+              '--slider-position': `${
+                massStops.length > 1
+                  ? (massStep / (massStops.length - 1)) * 100
+                  : 0
+              }%`,
+            }}
+            aria-label={`Minimum mass: ${formatMass(minMass)} solar masses`}
+            aria-describedby="mass-filter-help current-mass-output"
+            onChange={(event) => {
+              setMassStop(Math.trunc(toNonNegativeNumber(event.target.value)));
+            }}
+          />
 
-          <div className="slider-track">
-            <input
-              type="range"
-              min="0"
-              max={Math.max(massStops.length - 1, 0)}
-              step="1"
-              value={massStep}
-              id="black-hole-slider"
-              aria-label={`Minimum mass: ${formatMass(minMass)} solar masses`}
-              aria-describedby="mass-filter-help current-mass-output"
-              onChange={(event) => {
-                setMassStop(Math.trunc(toNonNegativeNumber(event.target.value)));
-              }}
-            />
-
-            <div className="slider-labels" aria-hidden="true">
-              <span>0</span>
-              <span>{formatNumber(maxMass || 100, 0)}</span>
-            </div>
+          <div className="slider-labels" aria-hidden="true">
+            <span>0</span>
+            <span>{formatNumber(maxMass || 100, 0)}</span>
           </div>
-
-          <button
-            className="slider-step-button"
-            type="button"
-            aria-label="Increase minimum mass"
-            disabled={massStep >= massStops.length - 1}
-            onClick={() => setMassStop(massStep + 1)}
-          >
-            <Plus size={20} aria-hidden="true" />
-          </button>
         </div>
       </div>
 

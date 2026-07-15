@@ -308,59 +308,34 @@ h2 {
   letter-spacing: 0.01em;
 }
 
-.slider-control-row {
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
-  gap: 12px;
-  align-items: center;
-  width: 100%;
-}
-
 .slider-track {
+  width: min(760px, calc(100% - 24px));
   min-width: 0;
-}
-
-.slider-step-button {
-  display: inline-grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border: 2px solid rgba(240, 234, 215, 0.72);
-  border-radius: 8px;
-  padding: 0;
-  color: #090b19;
-  background: #f0ead7;
-  line-height: 0;
-  cursor: pointer;
-}
-
-.slider-step-button svg {
-  display: block;
-  margin: auto;
-  pointer-events: none;
-  transform: translateX(1px);
-}
-
-.slider-step-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.slider-step-button:focus-visible {
-  outline: 3px solid #ffa286;
-  outline-offset: 3px;
+  margin-inline: auto;
 }
 
 #black-hole-slider {
+  --thumb-ring-color: color-mix(
+    in srgb,
+    #ffa286 calc(100% - var(--slider-position, 0%)),
+    #a2aaff var(--slider-position, 0%)
+  );
   width: 100%;
   appearance: none;
-  height: 10px;
-  min-height: 10px;
+  height: 12px;
+  min-height: 12px;
   padding: 0;
-  background: #ffa286;
+  background: linear-gradient(
+    90deg,
+    #ffa286 0%,
+    #ecbdaf 48%,
+    #a2aaff 100%
+  );
   border: 0;
   border-radius: 999px;
-  box-shadow: none;
+  box-shadow:
+    0 0 8px rgba(255, 162, 134, 0.46),
+    0 0 12px rgba(162, 170, 255, 0.3);
   cursor: pointer;
   touch-action: pan-y;
 }
@@ -374,9 +349,11 @@ h2 {
   appearance: none;
   width: 40px;
   height: 40px;
-  background: black;
-  border: 6px solid #ecbdaf;
+  background: #000;
+  border: 5px solid #ffa286;
+  border-color: var(--thumb-ring-color);
   border-radius: 50%;
+  box-shadow: 0 0 14px var(--thumb-ring-color);
   cursor: grab;
 }
 
@@ -391,9 +368,11 @@ h2 {
 #black-hole-slider::-moz-range-thumb {
   width: 40px;
   height: 40px;
-  background: black;
-  border: 6px solid #ecbdaf;
+  background: #000;
+  border: 5px solid #ffa286;
+  border-color: var(--thumb-ring-color);
   border-radius: 50%;
+  box-shadow: 0 0 14px var(--thumb-ring-color);
   cursor: grab;
 }
 
@@ -800,6 +779,7 @@ h2 {
   .chart-loading {
     animation: none;
   }
+
 }
 
 .dashboard-panel {
@@ -1504,11 +1484,6 @@ td + td {
 
   .filter-summary .card-organizer {
     grid-template-columns: 1fr;
-  }
-
-  .slider-control-row {
-    grid-template-columns: 48px minmax(0, 1fr) 48px;
-    gap: 8px;
   }
 
   #black-hole-slider::-webkit-slider-thumb {

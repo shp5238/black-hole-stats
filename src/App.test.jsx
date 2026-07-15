@@ -182,25 +182,6 @@ describe('dashboard filtering', () => {
     expect(screen.queryByText('V404 Cygni')).not.toBeInTheDocument();
   });
 
-  it('supports precise minimum-mass changes with step buttons', async () => {
-    await renderDashboard();
-
-    const decreaseButton = screen.getByRole('button', {
-      name: 'Decrease minimum mass',
-    });
-    const increaseButton = screen.getByRole('button', {
-      name: 'Increase minimum mass',
-    });
-
-    expect(decreaseButton).toBeDisabled();
-    fireEvent.click(increaseButton);
-    expect(screen.getByLabelText('Current minimum mass')).toHaveTextContent('6.3 M☉');
-    expect(decreaseButton).toBeEnabled();
-
-    fireEvent.click(decreaseButton);
-    expect(screen.getByLabelText('Current minimum mass')).toHaveTextContent('0 M☉');
-  });
-
   it('applies search, classification, and mass filters at the same time', async () => {
     await renderDashboard();
 
